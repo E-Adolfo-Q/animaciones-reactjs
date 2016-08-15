@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+ <html lang="es">
+ <head>
+ <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="index.css">  	
+ </head>
+ <body>
+	<section id="container"></section>     
+	<script type="text/javascript" src="http://fb.me/react-with-addons-0.13.3.js"></script>
+	<script type="text/javascript" src="http://fb.me/JSXTransformer-0.13.3.js"></script>
+	<script type="text/jsx;harmony=true">
+
+	    var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
+	    class TodoList extends React.Component{
+
+         constructor(props){          
+           super(props);
+           this.state = {items:['hello','world','click','me']}
+        }
+
+        handleAdd(){           
+           var newItems = this.state.items.concat([prompt('Agregue una tarea')]);                  
+           this.setState({items:newItems});
+        }
+
+        handleRemove(i){                      
+           var newItems = this.state.items;
+           newItems.splice(i,1);          
+           this.setState({ items: newItems});
+        }
+
+        render (){         
+          return(
+                <div className="contenido">
+          	     <button onClick={this.handleAdd.bind(this)} className='button'>Agregar</button>                            
+          	     <ReactCSSTransitionGroup transitionName="example">
+          	      {                   
+                    this.state.items.map((item,i) => {                      
+                      return <div key={item} className='elemento'>
+                              <span>{item}</span> 
+                              <button className='button button2' onClick={this.handleRemove.bind(this,i)}>Eliminar</button>    
+                            </div>
+                    })
+          	      }
+          	    </ReactCSSTransitionGroup>
+              </div>
+            )
+        }
+	   }
+	    React.render(<TodoList />,document.getElementById("container"))
+	</script>
+ </body>
+</html>
